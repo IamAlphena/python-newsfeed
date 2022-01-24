@@ -12,17 +12,16 @@ class User(Base):
   email = Column(String(50), nullable=False, unique=True)
   password = Column(String(100), nullable=False)
 
-@validates('email')
-def validate_email(self, key, email):
-  #make sure email contains an @ character
-  assert 'a' in email
+  @validates('email')
+  def validate_email(self, key, email):
+    # make sure email contains an @ character
+    assert '@' in email
 
-  return email
+    return email
 
-@validates('password')
-def validate_password(self, key, password):
-  assert len(password) > 4
+  @validates('password')
+  def validate_password(self, key, password):
+    assert len(password) > 4
 
-  #encrypt password
-  return bcrypt.hashpw(password.encode('utf-8'), salt)
-  
+    # encrypt password
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
